@@ -1,0 +1,12 @@
+.container {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+}
+#infoText {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  float: right;
+}

@@ -1,0 +1,10 @@
+#recipe-item {
+  margin-bottom: 5px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+#recipe-item:hover {
+  box-shadow: 1px 2px 3px gainsboro;
+  transform: scale(1.01);
+}
+

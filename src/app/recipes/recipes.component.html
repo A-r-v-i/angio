@@ -1,14 +1,10 @@
-<div class="row">
+<div class="row recipeContainer">
   <div class="col-md-5">
-    <app-recipe-list
-      (recipeWasSelected)="selectedRecipe = $event"></app-recipe-list>
+    <app-recipe-list></app-recipe-list>
+    <button class="btn btn-info" (click)="login()">Login</button>
+    <button class="btn btn-warning" (click)="logout()">Logout</button>
   </div>
   <div class="col-md-7">
-    <app-recipe-detail
-      *ngIf="selectedRecipe; else infoText"
-      [recipe]="selectedRecipe"></app-recipe-detail>
-    <ng-template #infoText>
-      <p>Please select a Recipe!</p>
-    </ng-template>
+    <router-outlet></router-outlet>
   </div>
 </div>

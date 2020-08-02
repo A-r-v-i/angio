@@ -1,0 +1,9 @@
+@font-face {
+  font-family: ubuntu;
+  src: url("../assets/fonts/Ubuntu-Bold.ttf");
+}
+
+.container {
+  font-family: ubuntu;
+  font-weight: lighter;
+}
