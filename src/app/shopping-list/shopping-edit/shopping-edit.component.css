@@ -1,4 +1,4 @@
-.row{
+.row {
   padding: 0 10px;
 }
 
@@ -7,4 +7,10 @@
 }
 .manageBtns {
   margin-left: 5px;
+}
+
+#warning {
+  margin-left: 15px;
+  font-size: 12px;
+  color: red;
 }

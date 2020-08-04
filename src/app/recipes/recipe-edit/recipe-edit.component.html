@@ -1,1 +1,61 @@
-<p>recipe-edit works!</p>
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <form (ngSubmit)="onSubmit()" #form="ngForm">
+        <div class="form-group">
+          <label for="name">Recipe</label>
+          <input type="text" class="form-control" ngModel name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" class="form-control" ngModel name="description" required #description="ngModel">
+          <code class="form-text" style="color:palevioletred; font-weight: lighter;"
+            *ngIf="!description.valid && description.touched">
+            Type description about product</code>
+        </div>
+        <div class="form-group">
+          <select name="dish" id="dish" class="form-control" [ngModel]="typeOfFood">
+            <option value="indian">Indian</option>
+            <option value="chinese">Chinese</option>
+            <option value="italian">Italian</option>
+            <option value="chetinad">Chetinad</option>
+          </select>
+        </div>
+        <button class="btn btn-warning" [disabled]="!form.form.valid">Add</button>
+      </form>
+    </div>
+  </div>
+</div> -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Recipe</label>
+          <input type="text" class="form-control" formControlName="name" required>
+          <span *ngIf="recipeForm.get('name').errors && recipeForm.get('name').touched" id="warning">
+            enter valid name 
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" class="form-control" formControlName="description" required>
+          <span *ngIf="!recipeForm.get('description').valid && recipeForm.get('description').touched" id="warning">
+            Description should be atleast 15 characters
+          </span>
+        </div>
+        <div class="form-group">
+          <select formControlName="dish" formControlName="dish" id="dish" class="form-control">
+            <option value="default" hidden>Type of dish</option>
+            <option value="indian">Indian</option>
+            <option value="chinese">Chinese</option>
+            <option value="italian">Italian</option>
+            <option value="chetinad">Chetinad</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success" style="float: right;" [disabled]="!recipeForm.touched">Add</button>
+      </form>
+    </div>
+  </div>
+</div>

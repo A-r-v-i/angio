@@ -1,9 +1,13 @@
-import {Ingredient} from '../models/ingrediants.model';
-import { EventEmitter } from '@angular/core';
+
+// import { EventEmitter } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
+
+import { Ingredient } from '../models/ingrediants.model';
 
 export class ShoppingList {
 
-  updatedIngredients = new EventEmitter<Ingredient[]>();
+  updatedIngredients = new Subject<Ingredient[]>();
+  editItem = new Subject<number>();
 
   ingredients: Ingredient[] = [
     new Ingredient('Apples🍎', 5),
@@ -11,17 +15,31 @@ export class ShoppingList {
   ];
 
   getList() {
-    return this.ingredients.slice()
+    return this.ingredients.slice();
   }
 
-  newlyAddedIngredient(ingredient: Ingredient){
+  getItem(index: number) {
+    return this.ingredients[index];
+  }
+
+  updateItem(index: number, ingredient: Ingredient) {
+    this.ingredients[index] = ingredient;
+    this.updatedIngredients.next(this.ingredients.slice());
+  }
+
+  deleteItem(index: number) {
+    this.ingredients.splice(index, 1);
+    this.updatedIngredients.next(this.ingredients.slice());
+  }
+
+  newlyAddedIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
-    this.updatedIngredients.emit(this.ingredients.slice());
+    this.updatedIngredients.next(this.ingredients.slice());
   }
 
   ingredientsFromRecipeDetail(ingrediants: Ingredient[]) {
     this.ingredients.push(...ingrediants);
-    this.updatedIngredients.emit(this.ingredients.slice());
+    this.updatedIngredients.next(this.ingredients.slice());
   }
 
 }

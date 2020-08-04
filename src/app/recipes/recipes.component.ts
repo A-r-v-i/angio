@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Recipe } from '../shared/models/recipe.model';
 import { RecipeService } from './../shared/services/recipe.service';
-import { AuthService } from '../auth-service';
+// import { AuthService } from '../auth-service';
 
 @Component({
   selector: 'app-recipes',
@@ -12,7 +12,7 @@ import { AuthService } from '../auth-service';
 })
 export class RecipesComponent implements OnInit {
   selectedRecipe: Recipe;
-  constructor(private recipeService: RecipeService, private authServie: AuthService) { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
     this.recipeService.selectedRecipe.subscribe(
@@ -22,13 +22,13 @@ export class RecipesComponent implements OnInit {
     )
   }
 
-  login() {
-    this.authServie.login();
-  }
+  // login() {
+  //   this.authServie.login();
+  // }
 
-  logout() {
-    this.authServie.logout()
-  }
+  // logout() {
+  //   this.authServie.logout()
+  // }
 
 
 }
