@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 import { AppComponent } from './app.component'; //main app
 import { HeaderComponent } from './header/header.component'; //main header 
@@ -28,6 +29,9 @@ import { AuthGuard } from './shared/services/auth-guard-service'; //auth middlew
 import { AuthService } from './shared/services/auth-service'; //auth service which returns the boolean value for authentication. returns true if logged in else false to auth gaurad service
 import { ShoppingList } from './shared/services/shoppingList.service';
 
+//interceptors
+import { AuthInterceptorService } from './shared/interceptors/auth-interceptors-service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,9 +53,19 @@ import { ShoppingList } from './shared/services/shoppingList.service';
     BrowserModule,
     // FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
-  providers: [ShoppingList, AuthGuard, AuthService],
+  providers: [
+    ShoppingList,
+    AuthGuard,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

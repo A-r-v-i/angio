@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -9,6 +11,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./recipe-edit.component.css']
 })
 export class RecipeEditComponent implements OnInit {
+
+  url = environment.fbUrl;
 
   recipeForm: FormGroup;
 
@@ -20,7 +24,7 @@ export class RecipeEditComponent implements OnInit {
   typeOfFood = 'chetinad';
   existingDishes = ['upma', 'coco chutney'];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit() {
 
@@ -30,29 +34,12 @@ export class RecipeEditComponent implements OnInit {
       'dish': new FormControl('default', null, this.existingDishType)
     })
 
-    this.recipeForm.statusChanges.subscribe(
-      (status) => { console.log(status) }
-    )
     this.recipeForm.setValue({
-      'name': 'Enter your fav dish',
-      'description': 'Say some intresting facts about the dish',
+      'name': '',
+      'description': '',
       'dish': 'default'
     })
-    // this.route.params
-    //   .subscribe(
-    //     (params: Params) => {
-    //       this.id = +params['id'];
-    //       this.editMode = params['id'] != null;
-    //     }
-    //   )
-
-    // this.valid = (this.recipeForm.form.status) === "valid" ? true : false;
-    // console.log(this.editMode)
   }
-
-  // onSubmit(form: NgForm) {
-  //   console.log(form);
-  // }
 
   existingDish(control: FormControl): { [s: string]: boolean } {
     if (this.existingDishes.indexOf(control.value) !== -1) {
@@ -76,8 +63,9 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log(this.recipeForm.form.status);
+    // this.http.post(this.url+'recipe.json', {})
     console.log(this.recipeForm)
+    this.recipeForm.reset()
   }
 
 }

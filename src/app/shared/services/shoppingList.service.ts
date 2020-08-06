@@ -3,19 +3,63 @@
 import { Subject, Subscription } from 'rxjs';
 
 import { Ingredient } from '../models/ingrediants.model';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map, tap } from 'rxjs/operators';
+
+@Injectable({ providedIn: "root" })
 
 export class ShoppingList {
+
+  constructor(private http: HttpClient) { }
+  fbUrl = environment.fbUrl;
+
+  tempArr = [];
+  newIngrdient: Ingredient;
+
+  ingredientsList = new Subject<Ingredient[]>();
 
   updatedIngredients = new Subject<Ingredient[]>();
   editItem = new Subject<number>();
 
-  ingredients: Ingredient[] = [
-    new Ingredient('Apples🍎', 5),
-    new Ingredient('Tomatoes🍅', 10),
-  ];
+  ingredients: Ingredient[] = [];
+
+  storeItems(dish: Ingredient) {
+    console.log(dish);
+    return this.http.post(`${this.fbUrl}item.json`, dish, {
+      observe: 'response'
+    })
+    // .subscribe(
+    //   response => {
+    //     console.log(response);
+    //   }
+    // )
+  }
 
   getList() {
-    return this.ingredients.slice();
+    let tempArr = [];
+    this.http.get(`${this.fbUrl}item.json`, {
+      headers: new HttpHeaders({ 'Custom-Header': 'Sample' }),
+      params: new HttpParams().set('name', 'aravind'),
+    })
+      .pipe(map((response) => {
+        for (let key in response) {
+          if (response.hasOwnProperty(key)) {
+            tempArr.push({ ...response[key], id: key });
+          }
+        }
+        return tempArr;
+      }))
+      .subscribe(dishes => {
+        dishes.map(dish => {
+          this.ingredients.push(new Ingredient(dish.dishName, dish.dishPrice, dish.id));
+        })
+      })
+    console.log(this.ingredients);
+    // return this.ingredientsList.next(this.ingredients);
+    return this.ingredients;
+
   }
 
   getItem(index: number) {
@@ -27,9 +71,12 @@ export class ShoppingList {
     this.updatedIngredients.next(this.ingredients.slice());
   }
 
-  deleteItem(index: number) {
-    this.ingredients.splice(index, 1);
-    this.updatedIngredients.next(this.ingredients.slice());
+  deleteItem() {
+    // console.log(id);
+    return this.http.delete(`${this.fbUrl}item.json`);
+
+    // this.ingredients.splice(index, 1);
+    // this.updatedIngredients.next(this.ingredients.slice());
   }
 
   newlyAddedIngredient(ingredient: Ingredient) {

@@ -11,6 +11,7 @@
             <label for="dishPrice">Price</label>
             <input type="number" name="dishPrice" id="dishPrice" class="form-control" formControlName="dishPrice"
               required>
+            <input type="hidden" name="id" formControlName="id">
           </div>
         </div>
         <span *ngIf="!itemForm.get('dishPrice').valid && itemForm.get('dishPrice').touched" id="warning">

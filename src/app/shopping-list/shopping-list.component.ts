@@ -10,31 +10,32 @@ import { Subscription } from 'rxjs';
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[];
-  // ingredient: Ingredient;
   private slSubscription: Subscription;
   private updateSubscription: Subscription;
+  isFetching: boolean = true;
 
   constructor(private shoppingList: ShoppingList) { }
 
   ngOnInit() {
+
     this.ingredients = this.shoppingList.getList();
+    this.isFetching = false;
+
     this.slSubscription = this.shoppingList.updatedIngredients.subscribe(
       (ingredients: Ingredient[]) => {
         this.ingredients = ingredients
       }
     )
-    // this.updateSubscription = this.shoppingList.updateItem.subscribe(
-    //   (ingredient: Ingredient) => {
-    //     this.ingredient = ingredient;
-    //     this.ingredients.push(ingredient)
-    //   }
-    // )
+  }
 
-  }
-  ngOnDestroy() {
-    this.slSubscription.unsubscribe();
-    // this.updateSubscription.unsubscribe();
-  }
+  // this.updateSubscription = this.shoppingList.updateItem.subscribe(
+  //   (ingredient: Ingredient) => {
+  //     this.ingredient = ingredient;
+  //     this.ingredients.push(ingredient)
+  //   }
+  // )
+
+
 
   onIngredientAdded(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
@@ -42,5 +43,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   onEditItem(index: number) {
     console.log(index)
     this.shoppingList.editItem.next(index);
+  }
+  ngOnDestroy() {
+    this.slSubscription.unsubscribe();
+    this.ingredients = [];
+    // this.updateSubscription.unsubscribe();
   }
 }
