@@ -10,6 +10,6 @@ export class HeaderComponent {
   constructor(private recipeService: RecipeService) { }
 
   onSaveRecipe() {
-    this.recipeService.saveRecipe();
+    this.recipeService.saveRecipe()
   }
 }

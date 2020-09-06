@@ -15,7 +15,6 @@ export class ShoppingList {
   constructor(private http: HttpClient) { }
   fbUrl = environment.fbUrl;
 
-  tempArr = [];
   newIngrdient: Ingredient;
 
   ingredientsList = new Subject<Ingredient[]>();
@@ -36,8 +35,8 @@ export class ShoppingList {
     //   }
     // )
   }
-
   getList() {
+    // console.log(this.ingredients)
     let tempArr = [];
     this.http.get(`${this.fbUrl}item.json`, {
       headers: new HttpHeaders({ 'Custom-Header': 'Sample' }),
@@ -52,11 +51,12 @@ export class ShoppingList {
         return tempArr;
       }))
       .subscribe(dishes => {
+        // console.log(this.ingredients)
         dishes.map(dish => {
           this.ingredients.push(new Ingredient(dish.dishName, dish.dishPrice, dish.id));
         })
       })
-    console.log(this.ingredients);
+    // console.log(this.ingredients);
     // return this.ingredientsList.next(this.ingredients);
     return this.ingredients;
 

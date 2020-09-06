@@ -4,7 +4,18 @@
 
 export const environment = {
   production: false,
-  fbUrl: 'https://angio-taste-by-u.firebaseio.com/'
+  fbUrl: 'https://angio-taste-by-u.firebaseio.com/',
+  firebaseConfig: {
+    apiKey: "AIzaSyDaJPHIxLubB5g_2d2WBXeNCen1bTQdB74",
+    authDomain: "angio-taste-by-u.firebaseapp.com",
+    databaseURL: "https://angio-taste-by-u.firebaseio.com",
+    projectId: "angio-taste-by-u",
+    storageBucket: "angio-taste-by-u.appspot.com",
+    messagingSenderId: "1070188389668",
+    appId: "1:1070188389668:web:e13adb03995efa766bffb1",
+    measurementId: "G-KS1CVTZPXV"
+  }
+
 };
 
 /*

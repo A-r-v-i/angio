@@ -7,11 +7,11 @@
 }
 #imgWrapper img{
   width: 100%;
-  transition: transform .5s, filter 1.5s ease;
+  transition: transform .8s, filter 1.5s ease;
   filter: grayscale(10%);
 }
 
 #imgWrapper:hover img {
-  transform: scale(1.3);
+  transform: scale(1.1);
   filter: grayscale(0%);
 }
